@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nova rezervacija</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form #f="ngForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">Datum</ion-label>
+      <ion-input type="date" name="date" ngModel required
+        [(ngModel)]="date"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Vrijeme</ion-label>
+      <ion-input type="time" name="time" ngModel required
+        [(ngModel)]="time"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Broj osoba</ion-label>
+      <ion-input type="number" name="numberOfGuests" ngModel required
+        [(ngModel)]="numberOfGuests" min="1" max="20"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" color="primary"
+      class="ion-margin-top" [disabled]="f.invalid">
+      <ion-icon name="checkmark" slot="start"></ion-icon>
+      Potvrdi rezervaciju
+    </ion-button>
+  </form>
+</ion-content>

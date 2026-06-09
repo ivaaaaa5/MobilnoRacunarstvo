@@ -1,14 +1,21 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideIonicAngular } from '@ionic/angular/standalone';
+import { provideRouter } from '@angular/router';
 
 import { AppComponent } from './app/app.component';
-import { environment } from './environments/environment';
+import { routes } from './app/app.routes';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';  // ← OVO DODAJ
+import { environment } from './environments/environment';
+import { provideHttpClient } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideIonicAngular(),
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig))
+    provideRouter(routes),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),  // ← OVO DODAJ
+    provideHttpClient()
   ],
 });

@@ -7,6 +7,7 @@ export const environment = {
     storageBucket: "mojaapp-a55a3.firebasestorage.app",
     messagingSenderId: "559882369251",
     appId: "1:559882369251:web:62d9ff899e3e3443ffadd6",
-    measurementId: "G-Y5L2YRG356"
+    measurementId: "G-Y5L2YRG356",
+    databaseURL: "https://mojaapp-a55a3-default-rtdb.europe-west1.firebasedatabase.app"
   }
 };
