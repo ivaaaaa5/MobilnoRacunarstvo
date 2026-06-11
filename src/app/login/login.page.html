@@ -1,17 +1,33 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Restoran Sakura</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  
+  <div style="text-align: center; margin: 40px 0 30px 0;">
+    <ion-icon name="restaurant" style="font-size: 64px; color: #eb445a;"></ion-icon>
+    <h2 style="color: #eb445a; font-weight: bold; margin-top: 10px;">Dobrodošli</h2>
+    <p style="color: #888;">Prijavite se na svoj nalog</p>
+  </div>
 
-  <ion-input placeholder="Email" [(ngModel)]="email"></ion-input>
+  <ion-item lines="full">
+    <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
+    <ion-input placeholder="Email" [(ngModel)]="email" type="email"></ion-input>
+  </ion-item>
 
-  <ion-input placeholder="Password" type="password" [(ngModel)]="password"></ion-input>
+  <ion-item lines="full" style="margin-top: 10px;">
+    <ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon>
+    <ion-input placeholder="Lozinka" type="password" [(ngModel)]="password"></ion-input>
+  </ion-item>
 
-  <ion-button expand="block" (click)="login()">
+  <ion-button expand="block" (click)="login()" style="margin-top: 24px;">
     Login
+  </ion-button>
+
+  <ion-button expand="block" fill="clear" routerLink="/register">
+    Nemate nalog? Registrujte se
   </ion-button>
 
 </ion-content>

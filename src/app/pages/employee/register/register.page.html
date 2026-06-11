@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Registracija</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label position="floating">Ime</ion-label>
+    <ion-input type="text" [(ngModel)]="name"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Email</ion-label>
+    <ion-input type="email" [(ngModel)]="email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Password</ion-label>
+    <ion-input type="password" [(ngModel)]="password"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Tip korisnika</ion-label>
+    <ion-select [(ngModel)]="role" placeholder="Odaberi">
+      <ion-select-option value="klijent">Klijent</ion-select-option>
+      <ion-select-option value="zaposleni">Zaposleni</ion-select-option>
+      <ion-select-option value="admin">Admin</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-button expand="block" (click)="onRegister()" class="ion-margin-top">
+    Registruj se
+  </ion-button>
+
+  <ion-button expand="block" fill="clear" routerLink="/login">
+    Već imate nalog? Prijavite se
+  </ion-button>
+</ion-content>
