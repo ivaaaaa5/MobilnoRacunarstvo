@@ -7,28 +7,56 @@
     </ion-header>
     <ion-content>
       <ion-list lines="none">
+
+        <!-- Svi vide Početnu -->
         <ion-menu-toggle>
           <ion-item routerLink="/home">
             <ion-icon name="home" slot="start"></ion-icon>
             <ion-label>Početna</ion-label>
           </ion-item>
         </ion-menu-toggle>
-        <ion-menu-toggle>
-          <ion-item routerLink="/reservations">
-            <ion-icon name="calendar" slot="start"></ion-icon>
-            <ion-label>Moje rezervacije</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
+
+        <!-- Samo klijent -->
+        @if(role === 'klijent') {
+          <ion-menu-toggle>
+            <ion-item routerLink="/reservations">
+              <ion-icon name="calendar" slot="start"></ion-icon>
+              <ion-label>Moje rezervacije</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        }
+
+        <!-- Samo zaposleni -->
+        @if(role === 'zaposleni') {
+          <ion-menu-toggle>
+            <ion-item routerLink="/employee-reservations">
+              <ion-icon name="people" slot="start"></ion-icon>
+              <ion-label>Zaposleni - Rezervacije</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        }
+
+        <!-- Samo admin -->
+        @if(role === 'admin') {
+          <ion-menu-toggle>
+            <ion-item routerLink="/admin">
+              <ion-icon name="stats-chart" slot="start"></ion-icon>
+              <ion-label>Admin panel</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        }
+
+        <!-- Svi vide Odjavu -->
         <ion-menu-toggle>
           <ion-item routerLink="/login">
             <ion-icon name="log-out" slot="start"></ion-icon>
             <ion-label>Odjava</ion-label>
           </ion-item>
         </ion-menu-toggle>
+
       </ion-list>
     </ion-content>
   </ion-menu>
 
   <ion-router-outlet id="main"></ion-router-outlet>
 </ion-app>
-

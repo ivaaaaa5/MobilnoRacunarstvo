@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
@@ -9,16 +8,33 @@
 </ion-header>
 
 <ion-content class="ion-padding ion-text-center">
-  <h2>Dobrodošli!</h2>
-  <p>Rezervišite sto u našem restoranu</p>
 
-  <ion-button expand="block" routerLink="/new-reservation" color="primary">
-    <ion-icon name="add-circle" slot="start"></ion-icon>
-    Nova rezervacija
-  </ion-button>
+  @if(role === 'klijent') {
+    <ion-button expand="block" color="primary"
+      (click)="goToNewReservation()">
+      <ion-icon name="add-circle" slot="start"></ion-icon>
+      Nova rezervacija
+    </ion-button>
+    <ion-button expand="block" color="secondary"
+      (click)="goToMyReservations()">
+      <ion-icon name="calendar" slot="start"></ion-icon>
+      Moje rezervacije
+    </ion-button>
+  }
 
-  <ion-button expand="block" routerLink="/reservations" color="secondary">
-    <ion-icon name="calendar" slot="start"></ion-icon>
-    Moje rezervacije
-  </ion-button>
+  @if(role === 'zaposleni') {
+    <ion-button expand="block" color="primary"
+      (click)="goToReservations()">
+      <ion-icon name="people" slot="start"></ion-icon>
+      Sve rezervacije
+    </ion-button>
+  }
+
+  @if(role === 'admin') {
+    <ion-button expand="block" color="primary"
+      (click)="goToAdmin()">
+      Admin panel
+    </ion-button>
+  }
+
 </ion-content>
