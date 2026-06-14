@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Sve rezervacije</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if(reservations.length === 0) {
+    <p class="ion-text-center">Nema rezervacija.</p>
+  }
+
+  <ion-list>
+    @for(r of reservations; track r.id) {
+      <ion-item>
+        <ion-icon name="calendar" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h2>{{ r.date }} u {{ r.time }}</h2>
+          <p>Broj osoba: {{ r.numberOfGuests }}</p>
+          <p>Korisnik: {{ r.userName || r.userId }}</p>
+          <p>Status:
+            <ion-badge [color]="r.status === 'confirmed' ? 'success' : 'warning'">
+              {{ r.status }}
+            </ion-badge>
+          </p>
+        </ion-label>
+        <ion-buttons slot="end">
+          @if(r.status !== 'confirmed') {
+            <ion-button color="success" fill="clear" (click)="onConfirmArrival(r)">
+              <ion-icon name="checkmark-circle"></ion-icon>
+            </ion-button>
+          }
+          <ion-button color="danger" fill="clear" (click)="onCancel(r.id!)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+            </ion-item>
+  }
+</ion-list>
+</ion-content>
