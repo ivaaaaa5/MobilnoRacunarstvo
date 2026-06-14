@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Reservation } from './reservation.model';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, tap,map } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
 
 @Injectable({
@@ -53,4 +53,38 @@ export class ReservationService {
       `${environment.firebaseConfig.databaseURL}/reservations/${id}.json`
     );
   }
+  updateReservationStatus(id: string, status: string) {
+  return this.http.patch(
+    `${environment.firebaseConfig.databaseURL}/reservations/${id}.json`,
+    { status }
+  );
+}
+getTimeSlots() {
+  return this.http
+    .get<{ [key: string]: any }>(
+      `${environment.firebaseConfig.databaseURL}/timeslots.json`
+    )
+    .pipe(
+      map(data => {
+        const slots = [];
+        for (const key in data) {
+          slots.push({ ...data[key], id: key });
+        }
+        return slots;
+      })
+    );
+}
+
+addTimeSlot(date: string, time: string, maxGuests: number) {
+  return this.http.post(
+    `${environment.firebaseConfig.databaseURL}/timeslots.json`,
+    { date, time, available: true, maxGuests }
+  );
+}
+
+deleteTimeSlot(id: string) {
+  return this.http.delete(
+    `${environment.firebaseConfig.databaseURL}/timeslots/${id}.json`
+  );
+}
 }
