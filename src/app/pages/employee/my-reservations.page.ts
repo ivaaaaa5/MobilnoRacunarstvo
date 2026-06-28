@@ -11,7 +11,6 @@ import { Reservation } from '../../shared/reservation.model';
 import { Subscription } from 'rxjs';
 import { addIcons } from 'ionicons';
 import { trash, calendar } from 'ionicons/icons';
-import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-my-reservations',
@@ -27,11 +26,11 @@ import { Auth } from '@angular/fire/auth';
 export class MyReservationsPage implements OnInit, OnDestroy {
   reservations: Reservation[] = [];
   private sub = new Subscription();
+  private uid = localStorage.getItem('uid');
 
   reservationService = inject(ReservationService);
   alertCtrl = inject(AlertController);
   loadingCtrl = inject(LoadingController);
-  auth = inject(Auth);
 
   constructor() {
     addIcons({ trash, calendar });
@@ -39,9 +38,7 @@ export class MyReservationsPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.reservationService.reservations.subscribe(res => {
-      this.reservations = res.filter(r =>
-        r.userId === this.auth.currentUser?.uid
-      );
+      this.reservations = res
     });
     this.reservationService.getReservations().subscribe();
   }

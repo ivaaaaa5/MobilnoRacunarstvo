@@ -8,9 +8,7 @@ import {
 } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { AuthService } from '../../../shared/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -30,28 +28,20 @@ export class RegisterPage {
   name = '';
   role = 'klijent';
 
-  private auth = inject(Auth);
-  private http = inject(HttpClient);
   private router = inject(Router);
   private loadingCtrl = inject(LoadingController);
   private alertCtrl = inject(AlertController);
+  private authService = inject(AuthService);
 
   async onRegister() {
     const loading = await this.loadingCtrl.create({ message: 'Registracija...' });
     await loading.present();
 
     try {
-      const result = await createUserWithEmailAndPassword(
-        this.auth, this.email, this.password
-      );
-
-      await this.http.put(
-        `${environment.firebaseConfig.databaseURL}/users/${result.user.uid}.json`,
-        { email: this.email, name: this.name, role: this.role }
-      ).toPromise();
+      await this.authService.register(this.email, this.password, this.name, this.role);
 
       await loading.dismiss();
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/login');
     } catch (e: any) {
       await loading.dismiss();
       const alert = await this.alertCtrl.create({

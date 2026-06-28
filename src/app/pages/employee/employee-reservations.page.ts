@@ -7,6 +7,7 @@ import {
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { ReservationService } from '../../shared/reservation.service';
+import { AuthService } from '../../shared/auth.service';
 import { Reservation } from '../../shared/reservation.model';
 import { Subscription } from 'rxjs';
 import { addIcons } from 'ionicons';
@@ -31,33 +32,32 @@ export class EmployeeReservationsPage implements OnInit, OnDestroy {
 
   reservationService = inject(ReservationService);
   loadingCtrl = inject(LoadingController);
-
+authService = inject(AuthService);
   constructor() {
     addIcons({ checkmarkCircle, calendar,trash });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.sub = this.reservationService.reservations.subscribe(res => {
       this.reservations = res;
     });
+    await this.authService.refreshToken();
     this.reservationService.getReservations().subscribe();
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
+async onConfirmArrival(reservation: Reservation) {
+  const loading = await this.loadingCtrl.create({ message: 'Potvrđivanje...' });
+  await loading.present();
+  this.reservationService.updateReservationStatus(reservation.id!, 'confirmed').subscribe(async () => {
+    await loading.dismiss();
+    this.reservationService.getReservations().subscribe();
+  });
+}
 
-  async onConfirmArrival(reservation: Reservation) {
-    const loading = await this.loadingCtrl.create({ message: 'Potvrđivanje...' });
-    await loading.present();
-    this.reservationService
-      .updateReservationStatus(reservation.id!, 'confirmed')
-      .subscribe(async () => {
-        await loading.dismiss();
-        this.reservationService.getReservations().subscribe();
-      });
-  }
-  async onCancel(id: string) {
+async onCancel(id: string) {
   const loading = await this.loadingCtrl.create({ message: 'Otkazivanje...' });
   await loading.present();
   this.reservationService.cancelReservation(id).subscribe(async () => {

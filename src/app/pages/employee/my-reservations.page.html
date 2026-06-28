@@ -9,7 +9,7 @@
 
 <ion-content class="ion-padding">
   @if(reservations.length === 0) {
-    <p class="ion-text-center">Nemate aktivnih rezervacija.</p>
+    <p class="ion-text-center">Nemate rezervacija.</p>
   }
 
   <ion-list>
@@ -19,13 +19,14 @@
         <ion-label>
           <h2>{{ r.date }} u {{ r.time }}</h2>
           <p>Broj osoba: {{ r.numberOfGuests }}</p>
-          <p>Status: <ion-badge [color]="r.status === 'confirmed' ? 'success' : 'warning'">
-            {{ r.status }}
-          </ion-badge></p>
+          <p>Status:
+            <ion-badge [color]="r.status === 'confirmed' ? 'success' : r.status === 'cancelled' ? 'danger' : 'warning'">
+              {{ r.status }}
+            </ion-badge>
+          </p>
         </ion-label>
         @if(canCancel(r)) {
-          <ion-button slot="end" color="danger" fill="clear"
-            (click)="onCancel(r.id!)">
+          <ion-button slot="end" color="danger" fill="clear" (click)="onCancel(r.id!)">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         }

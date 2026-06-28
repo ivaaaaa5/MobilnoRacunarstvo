@@ -49,21 +49,22 @@ export class TimeSlotsPage implements OnInit {
   async onAdd() {
     const loading = await this.loadingCtrl.create({ message: 'Dodavanje...' });
     await loading.present();
-    this.reservationService.addTimeSlot(this.date, this.time, this.maxGuests)
-      .subscribe(async () => {
-        await loading.dismiss();
-        this.date = '';
-        this.time = '';
-        this.loadSlots();
-      });
+  const obs = await this.reservationService.addTimeSlot(this.date, this.time, this.maxGuests);
+obs.subscribe(async () => {
+  await loading.dismiss();
+  this.date = '';
+  this.time = '';
+  this.loadSlots();
+});
   }
 
   async onDelete(id: string) {
     const loading = await this.loadingCtrl.create({ message: 'Brisanje...' });
     await loading.present();
-    this.reservationService.deleteTimeSlot(id).subscribe(async () => {
-      await loading.dismiss();
-      this.loadSlots();
-    });
+    const obs = await this.reservationService.deleteTimeSlot(id);
+obs.subscribe(async () => {
+  await loading.dismiss();
+  this.loadSlots();
+});
   }
 }
